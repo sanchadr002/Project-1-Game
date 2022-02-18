@@ -2,7 +2,7 @@
 
 <!-- Wireframe -->
 ## Wireframe of the game
-![Project 1 Wireframe](/project1/otherfiles/project_1_game_wireframe.pdf)
+![Project 1 Wireframe](/otherfiles/project_1_game_wireframe.pdf "wireframe")
 
 <!-- User story -->
 ## User story
@@ -24,14 +24,14 @@ I also just wanted to make a game about Homeless since she is the funniest and c
 
 ## Homeless's story
 
-One day, a raggedy little pomeranian showed up on my sister's front porch and refused to leave, even after my sister tried shooing her away and left for work.
+One day, a little pomeranian (named "Homeless" a few weeks later) showed up on the front porch while my sister, B, was leaving for work. Despite a shoo attempt, the dog stuck around even after B had left.
 
-After coming home from work, my sister saw the shape the dog was in, which wasn't great. My sister took the dog to the vet, where they had to remove several clumps of matted fur, some scabs, and all teeth.
+After coming home from work, B noticed the rough shape Homeless was in. Seeing patches of missing fur and some scabs, they were soon on the way to get the pom cleaned up. One vet trip and a removed set of teeth later, 
 
-Initially, my sister tried rehoming the pom since the dog had many issues sharing a living space, likely caused by what she had gone through prior to encountering my sister. After a few weeks of asking around, someone finally responded and offered to take the pom off of her hands.
+Initially, B tried rehoming Homeless since the dog had many issues sharing a living space, likely caused by what she had gone through in her life prior to encountering my sister. After a few weeks of asking around, someone finally responded and offered to take the pom off of her hands.
 
-However, in the time it took to find someone who wanted a raggedy and mean pom, the dog had begun to show just a sliver of love and vulnerability, which was enough for my sister to decide that the pom was staying right where she was, and named the dog "Homeless" (my sister has a very straightforward approach to pet naming conventions).
+However, in the time it took to find someone who wanted a patchy and mean pom, Homeless had begun to show just a sliver of love and vulnerability, which was enough for B to decide that the pom was staying right where she was, and named the dog "Homeless" (my sister has a very straightforward approach to pet naming conventions).
 
-In the three years since finding her home, Homeless has gone from a raggedy prickly pom who snaps at anything who moves, to a patchy only-mean-when-you-move-too-quickly-around-her-food princess who loves belly rubs and shows her appreciation by giving you kisses on the nose.
+In the three years since finding her home, Homeless has gone from a raggedy prickly pom who snaps at anything who moves, to a lightly fluffy only-mean-when-you-move-too-quickly-around-her-food princess who loves belly rubs and shows her appreciation by giving you kisses on the nose.
 
 We love you, Homeless!

@@ -2,7 +2,7 @@
 
 <!-- Wireframe -->
 ## Wireframe of the game
-![Project 1 Wireframe](/otherfiles/project_1_game_wireframe.pdf "wireframe")
+![Project 1 Wireframe](/otherfiles/project_1_game_wireframe.png "wireframe")
 
 <!-- User story -->
 ## User story

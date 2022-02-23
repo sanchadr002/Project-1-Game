@@ -30,12 +30,17 @@ const randomFood = () => {
     let food = new MovingThings (100, Math.floor(Math.random() * 145), 'brown', 5, 5)
     // render it to show it on the screen
     food.render()
+    setInterval(() => {
+        food.x - 10
+        food.render()
+
+    }, 500)
     // (homeless twirls when she's very excited)
     console.log('homeless twirls!')
     // return the object so it can be manipulated outside of the function
     return food
 }
-
+randomFood()
 const randomHairbrush = () => {
     let hairbrush = new MovingThings (100, Math.floor(Math.random() * 130), 'greenyellow', 20, 30)
     hairbrush.render()
@@ -50,12 +55,26 @@ const randomVacuum = () => {
     return vacuum
 }
 
-// const spawnProjectiles = () => {
-//     setInterval(randomFood, 3000)
-//     setInterval(randomHairbrush, 5000)
-//     setInterval(randomVacuum, 7000)
-// }
+const spawnProjectiles = () => {
+    setInterval(randomFood, 3000)
+    setInterval(randomHairbrush, 5000)
+    setInterval(randomVacuum, 7000)
+}
 
+const moveProjectilesLeft = () => {
+    randomHairbrush.x - 10
+    randomVacuum.x - 15
+    console.log('we are moving!', randomHairbrush.x)
+}
+
+// document.addEventListener('DOMContentLoaded', () => {
+//     randomFood()
+//     randomHairbrush()
+//     randomVacuum()
+//     spawnProjectiles()
+//     setInterval(moveProjectilesLeft, 500)
+//     }
+// )
 // create unit collision/hit detection
 
 // link up and down arrow keys to homeless
@@ -69,18 +88,9 @@ pointsDisplay.innerText = 0
 // create patience display
 // may only be a numerical value to start to assure MVP at deadline
 
-// function for randomly spawning projectiles
-// setInterval inside or outside??
-// BUG - PROJECTILES SPAWN IN PLACE EVERY 5 SECONDS INSTEAD OF SPAWNING AT A RANDOM Y COORDINATE
-//       IT IS ONLY RENDERING, NOT ACTUALLY CREATING A NEW PROJECTILE
-//       WRITE A FUNCTION THAT ACTUALLY CREATES A NEW PROJECTILE AND RENDERS IT
-// const spawnProjectiles = () => {
-//     hairbrush.render()
-//     vacuum.render()
-//     console.log('pew pew')
-// }
 
-// setInterval(spawnProjectiles, 5000)
+
+
 
 // function for increasing score on food catch
 // on food hit detection, increase score by 10

@@ -8,22 +8,29 @@ const ctx = game.getContext('2d')
 // create homeless & projectiles using a class constructor
 // used the class constructor code from canvas crawler as a template for this
 class MovingThings {
-    constructor(x, y, color, height, width){
+    constructor(x, y, color, width, height){
         this.x = x,
         this.y = y,
         this.color = color,
-        this.height = height,
         this.width = width,
+        this.height = height,
         this.alive = true,
         this.render = function () {
             ctx.fillStyle = this.color
-            ctx.fillRect(this.x, this.y, this.height, this.width)
+            ctx.fillRect(this.x, this.y, this.width, this.height)
         }
+        // a scroll left function within our class constructor allows for each piece created to have a
+        // function that we can call to have that individual piece move
+        // this function will have to erase and replace each piece to simulate movement
         this.scrollLeft = function () {
+            // setInterval() does exactly what we need for this
             setInterval(() => {
-                ctx.clearRect(this.x, this.y, this.height, this.width)
+                // eliminate each piece before the stats are changed
+                ctx.clearRect(this.x, this.y, this.width, this.height)
+                // change each relevant stat by a fixed amount
                 this.x -= 2
-                this.height - 2
+                // still not sure exactly why it's 
+                this.width - 2
                 this.render()
             }, 60)
         }
@@ -75,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     spawnProjectiles()
     }
 )
+
 // create unit collision/hit detection
 
 // link up and down arrow keys to homeless

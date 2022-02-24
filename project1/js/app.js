@@ -17,7 +17,15 @@ class MovingThings {
         this.alive = true,
         this.render = function () {
             ctx.fillStyle = this.color
-            ctx.fillRect(this.x, this.y, this. height, this.width)
+            ctx.fillRect(this.x, this.y, this.height, this.width)
+        }
+        this.scrollLeft = function () {
+            setInterval(() => {
+                ctx.clearRect(this.x, this.y, this.height, this.width)
+                this.x -= 2
+                this.height - 2
+                this.render()
+            }, 60)
         }
     }
 }
@@ -27,54 +35,46 @@ let homeless = new MovingThings(10, 10, 'goldenrod', 10, 10)
 // functions to create different elements at random points on the y axis
 const randomFood = () => {
     // use class to create each object
-    let food = new MovingThings (100, Math.floor(Math.random() * 145), 'brown', 5, 5)
+    let food = new MovingThings (200, Math.floor(Math.random() * 145), 'brown', 5, 5)
     // render it to show it on the screen
     food.render()
-    setInterval(() => {
-        food.x - 10
-        food.render()
-
-    }, 500)
+    // make it scroll left
+    food.scrollLeft()
     // (homeless twirls when she's very excited)
     console.log('homeless twirls!')
     // return the object so it can be manipulated outside of the function
     return food
 }
-randomFood()
 const randomHairbrush = () => {
-    let hairbrush = new MovingThings (100, Math.floor(Math.random() * 130), 'greenyellow', 20, 30)
+    let hairbrush = new MovingThings (200, Math.floor(Math.random() * 130), 'greenyellow', 20, 30)
     hairbrush.render()
+    hairbrush.scrollLeft()
     console.log('pew pew')
     return hairbrush
 }
 
 const randomVacuum = () => {
-    let vacuum = new MovingThings(100, Math.floor(Math.random() * 120), 'grey', 30, 50)
+    let vacuum = new MovingThings(200, Math.floor(Math.random() * 110), 'grey', 30, 50)
     vacuum.render()
+    vacuum.scrollLeft()
     console.log('boom')
     return vacuum
 }
 
 const spawnProjectiles = () => {
-    setInterval(randomFood, 3000)
+    setInterval(randomVacuum, 10000)
     setInterval(randomHairbrush, 5000)
-    setInterval(randomVacuum, 7000)
+    setInterval(randomFood, 3000)
 }
 
-const moveProjectilesLeft = () => {
-    randomHairbrush.x - 10
-    randomVacuum.x - 15
-    console.log('we are moving!', randomHairbrush.x)
-}
 
-// document.addEventListener('DOMContentLoaded', () => {
-//     randomFood()
-//     randomHairbrush()
-//     randomVacuum()
-//     spawnProjectiles()
-//     setInterval(moveProjectilesLeft, 500)
-//     }
-// )
+document.addEventListener('DOMContentLoaded', () => {
+    randomVacuum()
+    randomHairbrush()
+    randomFood()
+    spawnProjectiles()
+    }
+)
 // create unit collision/hit detection
 
 // link up and down arrow keys to homeless

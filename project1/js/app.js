@@ -34,11 +34,17 @@ class MovingThings {
                 this.render()
             }, 60)
         }
+        this.moveHomeless = function () {
+
+        }
     }
 }
 
 let homeless = new MovingThings(10, 10, 'goldenrod', 10, 10)
 
+const gameLoop = () => {
+    homeless.render()
+}
 // functions to create different elements at random points on the y axis
 const randomFood = () => {
     // use class to create each object
@@ -47,15 +53,16 @@ const randomFood = () => {
     food.render()
     // make it scroll left
     food.scrollLeft()
+    food.render()
     // (homeless twirls when she's very excited)
     console.log('homeless twirls!')
-    // return the object so it can be manipulated outside of the function
     return food
 }
 const randomHairbrush = () => {
     let hairbrush = new MovingThings (200, Math.floor(Math.random() * 130), 'greenyellow', 20, 30)
     hairbrush.render()
     hairbrush.scrollLeft()
+    hairbrush.render()
     console.log('pew pew')
     return hairbrush
 }
@@ -64,6 +71,7 @@ const randomVacuum = () => {
     let vacuum = new MovingThings(200, Math.floor(Math.random() * 110), 'grey', 30, 50)
     vacuum.render()
     vacuum.scrollLeft()
+    vacuum.render()
     console.log('boom')
     return vacuum
 }
@@ -75,18 +83,25 @@ const spawnProjectiles = () => {
 }
 
 
-document.addEventListener('DOMContentLoaded', () => {
-    randomVacuum()
-    randomHairbrush()
-    randomFood()
-    spawnProjectiles()
-    }
-)
-
 // create unit collision/hit detection
 
 // link up and down arrow keys to homeless
-
+// used canvas crawler as a template for this
+const movementHandler = (e) => {
+    switch (e.keyCode) {
+        case (38):
+            ctx.clearRect(homeless.x, homeless.y, homeless.width, homeless.height)
+            homeless.y -= 5
+            console.log('homeless pressed the up key')
+            break
+        case (40):
+            ctx.clearRect(homeless.x, homeless.y, homeless.width, homeless.height)
+            homeless.y += 5
+            console.log('homeless pressed the down key')
+            break
+    }
+    
+}
 // grab score display (100 points to win)
 // its content start at 0 and increase by however much with each food hit
 pointsDisplay.innerText = 0
@@ -113,3 +128,10 @@ const pointsUp = () => {
 // function for game over detection
 
 // function for win detection
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('keydown', movementHandler)
+    spawnProjectiles()
+    setInterval(gameLoop, 60)
+    }
+)

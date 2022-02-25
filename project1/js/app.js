@@ -26,10 +26,11 @@ class MovingThings {
             // setInterval() does exactly what we need for this
             // setInterval(() => {
                 // eliminate each piece before the stats are changed
-                if (!this.alive){
+                
+                ctx.clearRect(this.x, this.y, this.width, this.height)
+                if (!this.alive || this.x === 0){
                     return
                 }
-                ctx.clearRect(this.x, this.y, this.width, this.height)
                 // change each relevant stat by a fixed amount
                 this.x -= 2
                 this.width - 2
@@ -47,11 +48,9 @@ let food = new MovingThings (200, Math.floor(Math.random() * 145), 'brown', 5, 5
 let hairbrush = new MovingThings (200, Math.floor(Math.random() * 130), 'greenyellow', 20, 30)
 let vacuum = new MovingThings(200, Math.floor(Math.random() * 110), 'grey', 30, 50)
 
-const removeProjectile = (projectile) => {
-    if (!projectile.alive){
+let projectilesArr = [];
 
-    }
-}
+
 
 // create unit collision/hit detection
 // used canvas crawler as a template
@@ -62,6 +61,7 @@ const detectHit = () => {
         && homeless.y + homeless.height > vacuum.y){
             vacuum.alive = false
             ctx.clearRect(vacuum.x, vacuum.y, vacuum.width, vacuum.height)
+            
             console.log('vacuum hit')
     } else if (homeless.x < hairbrush.x + hairbrush.width
         && homeless.x + homeless.width > hairbrush.x
@@ -69,6 +69,7 @@ const detectHit = () => {
         && homeless.y + homeless.height > hairbrush.y){
             hairbrush.alive = false
             ctx.clearRect(hairbrush.x, hairbrush.y, hairbrush.width, hairbrush.height)
+            
             console.log('hairbrush hit')
     } else if (homeless.x < food.x + food.width
         && homeless.x + homeless.width > food.x
@@ -76,38 +77,52 @@ const detectHit = () => {
         && homeless.y + homeless.height > food.y){
             food.alive = false
             ctx.clearRect(food.x, food.y, food.width, food.height)
+            
             console.log('food hit')
     }
 }
 
 const gameLoop = () => {
+    
     ctx.clearRect(0, 0, game.width, game.height)
-    homeless.render()
+    
     vacuum.scrollLeft()
     hairbrush.scrollLeft()
     food.scrollLeft()
+    
     detectHit()
-}
-
+    homeless.render()
+    if (!food.alive){
+        food.x = 500
+        food.y = 500
+    } else if (!hairbrush.alive){
+        hairbrush.x = 500
+        hairbrush.y = 500
+    } else if (!vacuum.alive){
+        vacuum.x = 500
+        vacuum.y = 500
+    }
+} 
 // functions to create different elements at random points on the y axis
 const randomFood = () => {
     // use class to create each object
     food = new MovingThings (200, Math.floor(Math.random() * 145), 'brown', 5, 5)
+    projectilesArr.push(food)
     // render it to show it on the screen
     // make it scroll left
-    
     // (homeless twirls when she's very excited)
     console.log('homeless twirls!')
 }
 
 const randomHairbrush = () => {
     hairbrush = new MovingThings (200, Math.floor(Math.random() * 130), 'greenyellow', 20, 30)
-    
+    projectilesArr.push(hairbrush)
     console.log('pew pew')
 }
 
 const randomVacuum = () => {
     vacuum = new MovingThings(200, Math.floor(Math.random() * 110), 'grey', 30, 50)
+    projectilesArr.push(vacuum)
     console.log('boom')
 }
 
@@ -115,6 +130,7 @@ const spawnProjectiles = () => {
     setInterval(randomVacuum, 10000)
     setInterval(randomHairbrush, 7000)
     setInterval(randomFood, 5000)
+    
 }
 
 // create unit collision/hit detection

@@ -73,9 +73,9 @@ const detectHit = () => {
 
 const gameLoop = () => {
     homeless.render()
-    food.scrollLeft()
-    hairbrush.scrollLeft()
     vacuum.scrollLeft()
+    hairbrush.scrollLeft()
+    food.scrollLeft()
     detectHit()
 }
 
@@ -102,9 +102,9 @@ const randomVacuum = () => {
 }
 
 const spawnProjectiles = () => {
-    setInterval(randomFood, 3000)
-    setInterval(randomHairbrush, 5000)
     setInterval(randomVacuum, 10000)
+    setInterval(randomHairbrush, 7000)
+    setInterval(randomFood, 5000)
 }
 
 // create unit collision/hit detection
@@ -157,6 +157,6 @@ const pointsUp = () => {
 document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', movementHandler)
     spawnProjectiles()
-    setInterval(gameLoop, 60)
+    setInterval(gameLoop, 30)
     }
 )

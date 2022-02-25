@@ -6,7 +6,7 @@ const patienceDisplay = document.getElementById('patience-display')
 const ctx = game.getContext('2d')
 
 // create homeless & projectiles using a class constructor
-// used the class constructor code from canvas crawler as a template for this
+// used the class constructor code from canvas crawler as a template
 class MovingThings {
     constructor(x, y, color, width, height){
         this.x = x,
@@ -29,61 +29,88 @@ class MovingThings {
                 ctx.clearRect(this.x, this.y, this.width, this.height)
                 // change each relevant stat by a fixed amount
                 this.x -= 2
-                // still not sure exactly why it's 
                 this.width - 2
                 this.render()
+               
             }, 60)
-        }
-        this.moveHomeless = function () {
-
-        }
+            if (!this.alive){
+                clearInterval()
+            }
+        }   
     }
 }
 
 let homeless = new MovingThings(10, 10, 'goldenrod', 10, 10)
+let food = new MovingThings (200, Math.floor(Math.random() * 145), 'brown', 5, 5)
+let hairbrush = new MovingThings (200, Math.floor(Math.random() * 130), 'greenyellow', 20, 30)
+let vacuum = new MovingThings(200, Math.floor(Math.random() * 110), 'grey', 30, 50)
+
+// create unit collision/hit detection
+// used canvas crawler as a template
+const detectHit = () => {
+    if (homeless.x < vacuum.x + vacuum.width
+        && homeless.x + homeless.width > vacuum.x
+        && homeless.y < vacuum.y + vacuum.height
+        && homeless.y + homeless.height > vacuum.y){
+            vacuum.alive = false
+            ctx.clearRect(vacuum.x, vacuum.y, vacuum.width, vacuum.height)
+            console.log('vacuum hit')
+    } else if (homeless.x < hairbrush.x + hairbrush.width
+        && homeless.x + homeless.width > hairbrush.x
+        && homeless.y < hairbrush.y + hairbrush.height
+        && homeless.y + homeless.height > hairbrush.y){
+            hairbrush.alive = false
+            console.log('hairbrush hit')
+    } else if (homeless.x < food.x + food.width
+        && homeless.x + homeless.width > food.x
+        && homeless.y < food.y + food.height
+        && homeless.y + homeless.height > food.y){
+            food.alive = false
+            console.log('food hit')
+    }
+}
 
 const gameLoop = () => {
     homeless.render()
+    food.scrollLeft()
+    hairbrush.scrollLeft()
+    vacuum.scrollLeft()
+    detectHit()
 }
+
 // functions to create different elements at random points on the y axis
 const randomFood = () => {
     // use class to create each object
-    let food = new MovingThings (200, Math.floor(Math.random() * 145), 'brown', 5, 5)
+    food = new MovingThings (200, Math.floor(Math.random() * 145), 'brown', 5, 5)
     // render it to show it on the screen
     food.render()
     // make it scroll left
-    food.scrollLeft()
-    food.render()
+    
     // (homeless twirls when she's very excited)
     console.log('homeless twirls!')
-    return food
 }
+
 const randomHairbrush = () => {
-    let hairbrush = new MovingThings (200, Math.floor(Math.random() * 130), 'greenyellow', 20, 30)
+    hairbrush = new MovingThings (200, Math.floor(Math.random() * 130), 'greenyellow', 20, 30)
     hairbrush.render()
-    hairbrush.scrollLeft()
-    hairbrush.render()
+    
     console.log('pew pew')
-    return hairbrush
 }
 
 const randomVacuum = () => {
-    let vacuum = new MovingThings(200, Math.floor(Math.random() * 110), 'grey', 30, 50)
-    vacuum.render()
-    vacuum.scrollLeft()
+    vacuum = new MovingThings(200, Math.floor(Math.random() * 110), 'grey', 30, 50)
     vacuum.render()
     console.log('boom')
-    return vacuum
 }
 
 const spawnProjectiles = () => {
-    setInterval(randomVacuum, 10000)
-    setInterval(randomHairbrush, 5000)
     setInterval(randomFood, 3000)
+    setInterval(randomHairbrush, 5000)
+    setInterval(randomVacuum, 10000)
 }
 
-
 // create unit collision/hit detection
+// used canvas crawler as a template
 
 // link up and down arrow keys to homeless
 // used canvas crawler as a template for this
@@ -100,8 +127,8 @@ const movementHandler = (e) => {
             console.log('homeless pressed the down key')
             break
     }
-    
 }
+
 // grab score display (100 points to win)
 // its content start at 0 and increase by however much with each food hit
 pointsDisplay.innerText = 0
@@ -131,7 +158,7 @@ const pointsUp = () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', movementHandler)
-    spawnProjectiles()
     setInterval(gameLoop, 60)
+    spawnProjectiles()
     }
 )

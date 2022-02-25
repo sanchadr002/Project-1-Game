@@ -26,17 +26,19 @@ class MovingThings {
             // setInterval() does exactly what we need for this
             // setInterval(() => {
                 // eliminate each piece before the stats are changed
+                if (!this.alive){
+                    return
+                }
                 ctx.clearRect(this.x, this.y, this.width, this.height)
                 // change each relevant stat by a fixed amount
                 this.x -= 2
                 this.width - 2
                 this.render()
-               
             // }, 60)
             // if (!this.alive){
             //     clearInterval()
             // }
-        }   
+        }
     }
 }
 
@@ -45,6 +47,11 @@ let food = new MovingThings (200, Math.floor(Math.random() * 145), 'brown', 5, 5
 let hairbrush = new MovingThings (200, Math.floor(Math.random() * 130), 'greenyellow', 20, 30)
 let vacuum = new MovingThings(200, Math.floor(Math.random() * 110), 'grey', 30, 50)
 
+const removeProjectile = (projectile) => {
+    if (!projectile.alive){
+
+    }
+}
 
 // create unit collision/hit detection
 // used canvas crawler as a template
@@ -61,17 +68,20 @@ const detectHit = () => {
         && homeless.y < hairbrush.y + hairbrush.height
         && homeless.y + homeless.height > hairbrush.y){
             hairbrush.alive = false
+            ctx.clearRect(hairbrush.x, hairbrush.y, hairbrush.width, hairbrush.height)
             console.log('hairbrush hit')
     } else if (homeless.x < food.x + food.width
         && homeless.x + homeless.width > food.x
         && homeless.y < food.y + food.height
         && homeless.y + homeless.height > food.y){
             food.alive = false
+            ctx.clearRect(food.x, food.y, food.width, food.height)
             console.log('food hit')
     }
 }
 
 const gameLoop = () => {
+    ctx.clearRect(0, 0, game.width, game.height)
     homeless.render()
     vacuum.scrollLeft()
     hairbrush.scrollLeft()

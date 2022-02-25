@@ -24,7 +24,7 @@ class MovingThings {
         // this function will have to erase and replace each piece to simulate movement
         this.scrollLeft = function () {
             // setInterval() does exactly what we need for this
-            setInterval(() => {
+            // setInterval(() => {
                 // eliminate each piece before the stats are changed
                 ctx.clearRect(this.x, this.y, this.width, this.height)
                 // change each relevant stat by a fixed amount
@@ -32,10 +32,10 @@ class MovingThings {
                 this.width - 2
                 this.render()
                
-            }, 60)
-            if (!this.alive){
-                clearInterval()
-            }
+            // }, 60)
+            // if (!this.alive){
+            //     clearInterval()
+            // }
         }   
     }
 }
@@ -44,6 +44,7 @@ let homeless = new MovingThings(10, 10, 'goldenrod', 10, 10)
 let food = new MovingThings (200, Math.floor(Math.random() * 145), 'brown', 5, 5)
 let hairbrush = new MovingThings (200, Math.floor(Math.random() * 130), 'greenyellow', 20, 30)
 let vacuum = new MovingThings(200, Math.floor(Math.random() * 110), 'grey', 30, 50)
+
 
 // create unit collision/hit detection
 // used canvas crawler as a template
@@ -83,7 +84,6 @@ const randomFood = () => {
     // use class to create each object
     food = new MovingThings (200, Math.floor(Math.random() * 145), 'brown', 5, 5)
     // render it to show it on the screen
-    food.render()
     // make it scroll left
     
     // (homeless twirls when she's very excited)
@@ -92,14 +92,12 @@ const randomFood = () => {
 
 const randomHairbrush = () => {
     hairbrush = new MovingThings (200, Math.floor(Math.random() * 130), 'greenyellow', 20, 30)
-    hairbrush.render()
     
     console.log('pew pew')
 }
 
 const randomVacuum = () => {
     vacuum = new MovingThings(200, Math.floor(Math.random() * 110), 'grey', 30, 50)
-    vacuum.render()
     console.log('boom')
 }
 
@@ -158,7 +156,7 @@ const pointsUp = () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', movementHandler)
-    setInterval(gameLoop, 60)
     spawnProjectiles()
+    setInterval(gameLoop, 60)
     }
 )

@@ -34,9 +34,10 @@ class MovingThings {
                 this.x -= 5
                 this.width - 5
                 this.render()
+                return
         }
     }
-}food
+}
 
 let homeless = new MovingThings(10, 10, 'goldenrod', 10, 10)
 let food = new MovingThings (275, Math.floor(Math.random() * 145), 'brown', 5, 5)
@@ -58,6 +59,7 @@ const detectHit = () => {
         && homeless.y + homeless.height > food.y){
             food.alive = false
             pointsUp()
+            foodTypeDisplay.innerText = 'Pom/s favorite flavor of kibble!'
             ctx.clearRect(food.x, food.y, food.width, food.height)
             console.log('food hit')
     } else if (homeless.x < hairbrush.x + hairbrush.width
@@ -66,6 +68,7 @@ const detectHit = () => {
         && homeless.y + homeless.height > hairbrush.y){
             hairbrush.alive = false
             patienceDown()
+            foodTypeDisplay.innerText = 'Pom is not in the mood for a brushing.'
             ctx.clearRect(hairbrush.x, hairbrush.y, hairbrush.width, hairbrush.height)
             console.log('hairbrush hit')
     } else if (homeless.x < vacuum.x + vacuum.width
@@ -74,46 +77,64 @@ const detectHit = () => {
         && homeless.y + homeless.height > vacuum.y){
             vacuum.alive = false
             patienceDown()
+            foodTypeDisplay.innerText = 'Pom\'s arch nemesis .. the vacuum!'
             ctx.clearRect(vacuum.x, vacuum.y, vacuum.width, vacuum.height)
             console.log('vacuum hit')
     }
 }
 
-const gameLoop = () => {
+let gameLoop = () => {
     ctx.clearRect(0, 0, game.width, game.height)
     vacuum.scrollLeft()
     hairbrush.scrollLeft()
     food.scrollLeft()
     detectHit()
     homeless.render()
-} 
+    if (pointsDisplay.innerHTML === '5' || patienceDisplay.innerHTML === '0'){
+        clearInterval(gameLoopInterval)
+        ctx.clearRect(0, 0, game.width, game.height)
+        if (pointsDisplay.innerHTML === '5'){
+            ctx.fillText('You won! Pom finished all her food!', 100, 50)
+        } else if (patienceDisplay.innerHTML === '0'){
+            ctx.fillText('Game over! Pom lost her patience!', 100, 50)
+        }
+    }
+}
+
+let gameLoopInterval = setInterval(gameLoop, 30)
+
 // functions to create different elements at random points on the y axis
 const randomFood = () => {
     // use class to create each object
-    food = new MovingThings (250, Math.floor(Math.random() * 145), 'brown', 5, 5)
+    food = new MovingThings (275, Math.floor(Math.random() * 145), 'brown', 5, 5)
     // (homeless twirls when she's very excited)
+    if (pointsDisplay.innerHTML === '5' || patienceDisplay.innerHTML === '0'){
+        clearInterval(foodSpawn)
+    }
     console.log('homeless twirls!')
 }
 
 const randomHairbrush = () => {
-    hairbrush = new MovingThings (250, Math.floor(Math.random() * 130), 'greenyellow', 20, 30)
+    hairbrush = new MovingThings (275, Math.floor(Math.random() * 130), 'greenyellow', 10, 30)
+    if (pointsDisplay.innerHTML === '5' || patienceDisplay.innerHTML === '0'){
+        clearInterval(hairbrushSpawn)
+    }
     console.log('pew pew')
 }
 
 const randomVacuum = () => {
-    vacuum = new MovingThings(250, Math.floor(Math.random() * 110), 'grey', 30, 50)
+    vacuum = new MovingThings(275, Math.floor(Math.random() * 110), 'grey', 30, 50)
+    if (pointsDisplay.innerHTML === '5' || patienceDisplay.innerHTML === '0'){
+        clearInterval(vacuumSpawn)
+    }
     console.log('boom')
 }
 
-const spawnProjectiles = () => {
-    setInterval(randomVacuum, 9000)
-    setInterval(randomHairbrush, 6000)
-    setInterval(randomFood, 4000)
-    
+let spawnProjectiles = () => {
+    let vacuumSpawn = setInterval(randomVacuum, 9000)
+    let hairbrushSpawn = setInterval(randomHairbrush, 6000)
+    let foodSpawn = setInterval(randomFood, 4000)
 }
-
-// create unit collision/hit detection
-// used canvas crawler as a template
 
 // link up and down arrow keys to homeless
 // used canvas crawler as a template for this
@@ -132,37 +153,11 @@ const movementHandler = (e) => {
     }
 }
 
-// grab score display (100 points to win)
-// its content start at 0 and increase by however much with each food hit
-
-// create homeless's desired food type display
-
-// create patience display
-// may only be a numerical value to start to assure MVP at deadline
-
-
-
-
-
-// function for increasing score on food catch
-// on food hit detection, increase score by 1
-// MOVE this function to inside hit detection section
-const pointsUp = () => {
-    pointsDisplay.innerHTML++
-}
-
-// function for decreasing patience on hairbrush/vacuum hit
-// may need to push this for later to assure MVP at deadline
-
-// function for game over detection
-
-// function for win detection
-
 document.addEventListener('DOMContentLoaded', () => {
+    foodTypeDisplay.innerText = 'Pom is so happy to see you!'
     pointsDisplay.innerHTML = 0
-    patienceDisplay.innerHTML = 5
+    patienceDisplay.innerHTML = 3
     document.addEventListener('keydown', movementHandler)
     spawnProjectiles()
-    setInterval(gameLoop, 30)
     }
 )

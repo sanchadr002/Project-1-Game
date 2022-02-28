@@ -1,4 +1,5 @@
 console.log('script linked')
+// variables we can grab
 const game = document.getElementById('canvas')
 const foodTypeDisplay = document.getElementById('food-type-display')
 const pointsDisplay = document.getElementById('score-display')
@@ -39,6 +40,7 @@ class MovingThings {
     }
 }
 
+// declaring these variables globally so certain functions can run when we need them to
 let homeless = new MovingThings(10, 10, 'goldenrod', 10, 10)
 let food = new MovingThings (275, Math.floor(Math.random() * 145), 'brown', 5, 5)
 let hairbrush = new MovingThings (275, Math.floor(Math.random() * 130), 'greenyellow', 20, 30)
@@ -47,6 +49,7 @@ let vacuum = new MovingThings(275, Math.floor(Math.random() * 110), 'grey', 30, 
 // create unit collision/hit detection
 // used canvas crawler as a template
 const detectHit = () => {
+    // functions to increment/decrement points and patience displays
     const pointsUp = () => {
         pointsDisplay.innerHTML++
     }
@@ -57,9 +60,13 @@ const detectHit = () => {
         && homeless.x + homeless.width > food.x
         && homeless.y < food.y + food.height
         && homeless.y + homeless.height > food.y){
+            // change type for possible usage later on
             food.alive = false
             pointsUp()
+            // add some text to upper left area to add some liveliness to the game
+            // homeless's favorite flavor of kibble is a salmon flavor
             foodTypeDisplay.innerText = 'Pom/s favorite flavor of kibble!'
+            // clear the rectangle on hit
             ctx.clearRect(food.x, food.y, food.width, food.height)
             console.log('food hit')
     } else if (homeless.x < hairbrush.x + hairbrush.width
@@ -83,13 +90,21 @@ const detectHit = () => {
     }
 }
 
+// game loop to control most of game flow
+// used canvas crawler game loop as a template
 let gameLoop = () => {
     ctx.clearRect(0, 0, game.width, game.height)
+    // calling the scrollLeft functions here so they and hit detection can be on
+    // the same timer
+    detectHit()
     vacuum.scrollLeft()
     hairbrush.scrollLeft()
     food.scrollLeft()
     detectHit()
+    // we want pom to be rendered nearly always
+    // so we're adding her render function to the game loop towards the end
     homeless.render()
+    // tie a clearInterval to the game loop to go off when certain conditions are met
     if (pointsDisplay.innerHTML === '5' || patienceDisplay.innerHTML === '0'){
         clearInterval(gameLoopInterval)
         ctx.clearRect(0, 0, game.width, game.height)
@@ -101,16 +116,19 @@ let gameLoop = () => {
     }
 }
 
+// variable for clearInterval
 let gameLoopInterval = setInterval(gameLoop, 30)
 
 // functions to create different elements at random points on the y axis
 const randomFood = () => {
     // use class to create each object
     food = new MovingThings (275, Math.floor(Math.random() * 145), 'brown', 5, 5)
-    // (homeless twirls when she's very excited)
+    // since projectile spawning isn't tied to the game loop, have to add code
+    // to make these stop spawning on win/loss
     if (pointsDisplay.innerHTML === '5' || patienceDisplay.innerHTML === '0'){
         clearInterval(foodSpawn)
     }
+    // (homeless twirls when she's very excited)
     console.log('homeless twirls!')
 }
 
@@ -153,6 +171,7 @@ const movementHandler = (e) => {
     }
 }
 
+// events we want to happen on page load
 document.addEventListener('DOMContentLoaded', () => {
     foodTypeDisplay.innerText = 'Pom is so happy to see you!'
     pointsDisplay.innerHTML = 0
